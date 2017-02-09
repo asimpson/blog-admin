@@ -1,0 +1,6 @@
+{
+  "extends": "sparkbox",
+  "rules": {
+    "import/no-unresolved": 0
+   }
+}
