@@ -9,7 +9,12 @@
     "posttokenUpdate": "rm returnToken.js",
     "preloginUpdate": "cp ./lambdas/handleLogin.js ./",
     "loginUpdate": "deployless update bucket=ams-admin name=handleLogin key=handleLogin.zip file=handleLogin.js",
-    "postloginUpdate": "rm handleLogin.js"
+    "postloginUpdate": "rm handleLogin.js",
+    "preupdateBuildIndex": "cp ./lambdas/buildIndexPage.js ./",
+    "updateBuildIndex": "deployless update bucket=ams-admin name=buildIndexPage key=buildIndexPage.zip file=buildIndexPage.js",
+    "postupdateBuildIndex": "rm buildIndexPage.js",
+    "test": "http-server ./site -p 9000 -e html",
+    "fix": "eslint --fix ./lambdas/*.js"
   },
   "license": "MIT",
   "dependencies": {
