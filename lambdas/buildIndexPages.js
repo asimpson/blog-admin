@@ -1,7 +1,9 @@
+'use strict';
+
 const sql = require('sqlite3');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const App = require('../app');
+const App = require('./app');
 const template = require('./template');
 const aws = require('aws-sdk');
 const fs = require('fs');
@@ -60,8 +62,8 @@ const buildIndexPages = (event, context, callback) => {
       callback(err);
     }
 
-    fs.writeFileSync(path.join(__dirname, './BLOG'), data.Body);
-    const dbFile = path.join(__dirname, './BLOG');
+    fs.writeFileSync('/tmp/BLOG', data.Body);
+    const dbFile = path.join('/tmp/BLOG');
     const db = new sql.Database(dbFile);
 
     db.all('SELECT * from posts', (dbErr, dbData) => {
