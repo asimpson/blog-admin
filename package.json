@@ -13,6 +13,9 @@
     "preupdateBuildIndex": "cp ./lambdas/buildIndexPages.js ./ && cp ./lambdas/template.js ./",
     "updateBuildIndex": "deployless update bucket=ams-admin name=buildIndexPages app.js template.js",
     "postupdateBuildIndex": "rm buildIndexPages.js template.js",
+    "prebuildPosts": "cp ./lambdas/buildPosts.js ./ && cp ./lambdas/template.js ./",
+    "buildPosts": "deployless update bucket=ams-admin name=buildPosts app.js template.js",
+    "postbuildPosts": "rm buildPosts.js template.js",
     "test": "http-server ./site -p 9000 -e html",
     "fix": "eslint --fix ./lambdas/*.js"
   },
