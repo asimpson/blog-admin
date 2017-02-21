@@ -19,6 +19,9 @@
     "prenewPost": "cp ./lambdas/newPost.js ./",
     "newPost": "deployless update bucket=ams-admin name=newPost",
     "postnewPost": "rm newPost.js",
+    "preupdatePost": "cp ./lambdas/updatePost.js ./",
+    "updatePost": "deployless update bucket=ams-admin name=updatePost",
+    "postupdatePost": "rm updatePost.js",
     "prereturnPosts": "cp ./lambdas/returnPosts.js ./",
     "returnPosts": "deployless update bucket=ams-admin name=returnPosts",
     "postreturnPosts": "rm returnPosts.js",
@@ -49,6 +52,7 @@
     "react-dom": "^15.4.2",
     "sendgrid": "^4.7.0",
     "sqlite3": "^3.1.8",
+    "to-markdown": "^3.0.3",
     "webpack": "^2.2.1"
   },
   "devDependencies": {

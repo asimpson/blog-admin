@@ -24,7 +24,7 @@ const persistDB = (cb, thisDb) => {
   });
 };
 
-const newPost = (event, con, cb) => {
+const updatePost = (event, context, cb) => {
   s3.getObject({
     Bucket: 'ams-admin',
     Key: 'BLOG',
@@ -36,19 +36,16 @@ const newPost = (event, con, cb) => {
     fs.writeFileSync(BLOG, data.Body);
     const db = new sql.Database(BLOG);
 
-    db.run('INSERT INTO posts VALUES($id, $title, $pub_date, $mod_date, $content, $slug, $status, $excerpt, $type)', {
-      $id: null,
+    db.run('UPDATE posts SET title = $title, mod_date = $mod_date, slug = $slug, excerpt = $excerpt, content = $content WHERE id = $id', {
       $title: event.title,
-      $pub_date: event.date,
       $mod_date: event.mod_date,
-      $content: decodeURI(event.post),
       $slug: event.slug,
-      $status: 'published',
       $excerpt: decodeURI(event.excerpt),
-      $type: 'post',
-    }, function newRun(insertErr) {
-      if (insertErr) {
-        cb(JSON.stringify(insertErr));
+      $content: decodeURI(event.post),
+      $id: event.id,
+    }, function runCallback(e) {
+      if (e) {
+        cb(JSON.stringify(e));
       } else {
         persistDB(cb, this);
       }
@@ -56,4 +53,4 @@ const newPost = (event, con, cb) => {
   });
 };
 
-exports.handler = newPost;
+exports.handler = updatePost;

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import marked from 'marked';
+import toHTML from 'to-markdown';
 import Preview from './Frame';
 import template from './template';
+import publishPost from './publish';
+import editPost from './edit';
 
 export default class NewPost extends Component {
   constructor(props) {
@@ -14,8 +17,12 @@ export default class NewPost extends Component {
       body: '',
       html: '',
       posts: [],
-      new: false,
+      id: '',
+      editing: false,
+      compose: false,
+      markdown: '',
       slug: '',
+      error: '',
     };
 
     this.publish = this.publish.bind(this);
@@ -25,6 +32,8 @@ export default class NewPost extends Component {
     this.slugChange = this.slugChange.bind(this);
     this.renderScreen = this.renderScreen.bind(this);
     this.getPosts = this.getPosts.bind(this);
+    this.editPost = this.editPost.bind(this);
+    this.updatePreview = this.updatePreview.bind(this);
   }
 
   componentDidMount() {
@@ -36,12 +45,30 @@ export default class NewPost extends Component {
       fetch('https://9h6llisbo1.execute-api.us-east-1.amazonaws.com/prod/posts')
       .then(x => x.json())
       .then(x => this.setState({
-        new: false,
+        compose: false,
         posts: x,
       }));
     } else {
-      this.setState({ new: false });
+      this.setState({ compose: false });
     }
+  }
+
+  editPost(e) {
+    const id = e.target.id;
+    /* eslint eqeqeq: 0 */
+    const post = this.state.posts.filter(x => x.id == id)[0];
+    const md = toHTML(decodeURI(post.content));
+
+    this.setState({
+      editing: true,
+      compose: true,
+      title: post.title,
+      excerpt: decodeURI(post.excerpt),
+      slug: post.slug,
+      markdown: md,
+      body: decodeURI(post.content),
+      id,
+    }, this.updatePreview(decodeURI(post.content)));
   }
 
   excerptChange(e) {
@@ -50,33 +77,39 @@ export default class NewPost extends Component {
 
   publish(e) {
     e.preventDefault();
+
     const payload = {
       title: this.state.title,
       excerpt: this.state.excerpt,
       post: this.state.body,
       slug: this.state.slug,
-      date: moment().format('YYYY-MM-DD HH:mm:ss'),
+      id: this.state.id,
       mod_date: moment().format('YYYY-MM-DD HH:mm:ss'),
     };
 
-    const post = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    };
-    fetch('https://9h6llisbo1.execute-api.us-east-1.amazonaws.com/prod/publish', post)
-    .then(x => x.json())
-    .then(() => {
-      this.setState({
-        title: '',
-        excerpt: '',
-        body: '',
-        html: '',
-        slug: '',
-      });
-    });
+    if (this.state.editing) {
+      editPost(payload).then(() => {
+        this.setState({
+          title: '',
+          excerpt: '',
+          body: '',
+          html: '',
+          slug: '',
+        });
+      })
+      .catch(error => this.setState({ error }));
+    } else {
+      publishPost(payload).then(() => {
+        this.setState({
+          title: '',
+          excerpt: '',
+          body: '',
+          html: '',
+          slug: '',
+        });
+      })
+      .catch(error => this.setState({ error }));
+    }
   }
 
   titleChange(e) {
@@ -87,39 +120,46 @@ export default class NewPost extends Component {
     this.setState({ slug: e.target.value });
   }
 
-  renderPreview() {
-    const body = marked(this.body.value);
+  updatePreview(string) {
+    const body = string;
     const html = template(this.state.title, body);
 
     this.setState({ html, body });
   }
 
+  renderPreview() {
+    const body = marked(this.body.value);
+    const html = template(this.state.title, body);
+
+    this.setState({ html, body, markdown: this.body.value });
+  }
+
   renderScreen() {
-    if (this.state.new) {
+    if (this.state.compose) {
       return (
         <form onSubmit={this.publish}>
           <div>
             <label>
               Title
-              <input onChange={this.titleChange} type="text" />
+              <input value={this.state.title} onChange={this.titleChange} type="text" />
             </label>
           </div>
           <div>
             <label>
               Excerpt
-              <input onChange={this.excerptChange} type="text" />
+              <input value={this.state.excerpt} onChange={this.excerptChange} type="text" />
             </label>
           </div>
           <div>
             <label>
               Slug
-              <input onChange={this.slugChange} type="text" />
+              <input value={this.state.slug} onChange={this.slugChange} type="text" />
             </label>
           </div>
           <div>
             <label>
               Post
-              <textarea onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
+              <textarea value={this.state.markdown} onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
             </label>
           </div>
           <div>
@@ -132,7 +172,7 @@ export default class NewPost extends Component {
 
     const posts = this.state.posts.map((x, i) => (
       <li key={i}>
-        <button id={x.id}>{x.title}</button>
+        <button onClick={this.editPost} id={x.id}>{x.title}</button>
         <p>{x.excerpt}</p>
       </li>
     ));
@@ -151,9 +191,10 @@ export default class NewPost extends Component {
           <button onClick={this.getPosts}>Edit</button>
         </div>
         <div>
-          <button onClick={() => this.setState({ new: true })}>New</button>
+          <button onClick={() => this.setState({ compose: true })}>Compose</button>
         </div>
         {this.renderScreen()}
+        <p>{this.state.error}</p>
       </span>
     );
   }
