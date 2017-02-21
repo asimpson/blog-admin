@@ -1,3 +1,5 @@
+'use strict';
+
 const sql = require('sqlite3');
 const path = require('path');
 const fs = require('fs');

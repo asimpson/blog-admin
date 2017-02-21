@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import fetch from 'isomorphic-fetch';
+import NewPost from './NewPost';
 
 export default class Admin extends Component {
   constructor(props) {
@@ -81,7 +82,7 @@ export default class Admin extends Component {
     }
 
     if (this.state.authd) {
-      return <p>Authd!</p>;
+      return <NewPost />;
     }
 
     return null;
