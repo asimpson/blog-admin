@@ -13,6 +13,8 @@ export default class NewPost extends Component {
       excerpt: '',
       body: '',
       html: '',
+      posts: [],
+      new: false,
       slug: '',
     };
 
@@ -21,10 +23,29 @@ export default class NewPost extends Component {
     this.renderPreview = this.renderPreview.bind(this);
     this.excerptChange = this.excerptChange.bind(this);
     this.slugChange = this.slugChange.bind(this);
+    this.renderScreen = this.renderScreen.bind(this);
+    this.getPosts = this.getPosts.bind(this);
   }
 
-  titleChange(e) {
-    this.setState({ title: e.target.value }, () => (this.renderPreview()));
+  componentDidMount() {
+    this.getPosts();
+  }
+
+  getPosts() {
+    if (this.state.posts.length < 1) {
+      fetch('https://9h6llisbo1.execute-api.us-east-1.amazonaws.com/prod/posts')
+      .then(x => x.json())
+      .then(x => this.setState({
+        new: false,
+        posts: x,
+      }));
+    } else {
+      this.setState({ new: false });
+    }
+  }
+
+  excerptChange(e) {
+    this.setState({ excerpt: e.target.value });
   }
 
   publish(e) {
@@ -58,8 +79,8 @@ export default class NewPost extends Component {
     });
   }
 
-  excerptChange(e) {
-    this.setState({ excerpt: e.target.value });
+  titleChange(e) {
+    this.setState({ title: e.target.value }, () => (this.renderPreview()));
   }
 
   slugChange(e) {
@@ -73,38 +94,67 @@ export default class NewPost extends Component {
     this.setState({ html, body });
   }
 
+  renderScreen() {
+    if (this.state.new) {
+      return (
+        <form onSubmit={this.publish}>
+          <div>
+            <label>
+              Title
+              <input onChange={this.titleChange} type="text" />
+            </label>
+          </div>
+          <div>
+            <label>
+              Excerpt
+              <input onChange={this.excerptChange} type="text" />
+            </label>
+          </div>
+          <div>
+            <label>
+              Slug
+              <input onChange={this.slugChange} type="text" />
+            </label>
+          </div>
+          <div>
+            <label>
+              Post
+              <textarea onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
+            </label>
+          </div>
+          <div>
+            <input name="publish" type="submit" value="Publish" />
+          </div>
+          <Preview css="https://adamsimpson.net/css/base-da17be6277.css" html={this.state.html} />
+        </form>
+      );
+    }
+
+    const posts = this.state.posts.map((x, i) => (
+      <li key={i}>
+        <button id={x.id}>{x.title}</button>
+        <p>{x.excerpt}</p>
+      </li>
+    ));
+
+    return (
+      <ul>
+        {posts}
+      </ul>
+    );
+  }
+
   render() {
     return (
-      <form onSubmit={this.publish}>
+      <span>
         <div>
-          <label>
-            Title
-            <input onChange={this.titleChange} type="text" />
-          </label>
+          <button onClick={this.getPosts}>Edit</button>
         </div>
         <div>
-          <label>
-            Excerpt
-            <input onChange={this.excerptChange} type="text" />
-          </label>
+          <button onClick={() => this.setState({ new: true })}>New</button>
         </div>
-        <div>
-          <label>
-            Slug
-            <input onChange={this.slugChange} type="text" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Post
-            <textarea onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
-          </label>
-        </div>
-        <div>
-          <input name="publish" type="submit" value="Publish" />
-        </div>
-        <Preview css="https://adamsimpson.net/css/base-da17be6277.css" html={this.state.html} />
-      </form>
+        {this.renderScreen()}
+      </span>
     );
   }
 }
