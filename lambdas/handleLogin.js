@@ -20,7 +20,7 @@ const sendLink = (email, token, cb) => {
     content: [
       {
         type: 'text/plain',
-        value: `Login with this URL: adamsimpson.net/login?token=${token}`,
+        value: `Login with this URL: adamsimpson.net/admin?token=${token}`,
       },
     ],
     from: {

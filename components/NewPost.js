@@ -6,6 +6,7 @@ import Preview from './Frame';
 import template from './template';
 import publishPost from './publish';
 import editPost from './edit';
+import { buildPosts, buildIndex } from './posts';
 
 export default class NewPost extends Component {
   constructor(props) {
@@ -88,7 +89,8 @@ export default class NewPost extends Component {
     };
 
     if (this.state.editing) {
-      editPost(payload).then(() => {
+      editPost(payload)
+      .then(() => {
         this.setState({
           title: '',
           excerpt: '',
@@ -97,6 +99,9 @@ export default class NewPost extends Component {
           slug: '',
         });
       })
+      .catch(error => this.setState({ error }))
+      .then(() => buildPosts())
+      .then(() => console.log('done'))
       .catch(error => this.setState({ error }));
     } else {
       publishPost(payload).then(() => {
@@ -108,6 +113,10 @@ export default class NewPost extends Component {
           slug: '',
         });
       })
+      .catch(error => this.setState({ error }))
+      .then(() => buildIndex())
+      .then(() => buildPosts())
+      .then(() => console.log('done'))
       .catch(error => this.setState({ error }));
     }
   }
