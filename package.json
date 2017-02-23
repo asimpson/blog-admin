@@ -30,6 +30,8 @@
     "postcache": "rm invalidate.js",
     "test": "parallelshell 'http-server ./ -p 9000 -e html' 'webpack --config webpack.admin.js -w'",
     "buildAdmin": "webpack --config webpack.admin.js",
+    "deploy": "node deploy.js",
+    "prod": "webpack -p --config webpack.admin.js",
     "fix": "eslint --fix ./lambdas/*.js"
   },
   "license": "MIT",
@@ -40,6 +42,7 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "consolidate": "^0.14.5",
+    "content-type-mime": "^1.1.0",
     "deployless": "^0.2.1",
     "es6-promise": "^4.0.5",
     "eslint": "^3.15.0",
