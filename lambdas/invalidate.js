@@ -15,7 +15,7 @@ const getPageObjects = () => new Promise((resolve, reject) => {
     if (err) {
       reject(err);
     } else {
-      const names = data.Contents.map(x => x.Key);
+      const names = data.Contents.map(x => `/${x.Key}`);
       resolve(names);
     }
   });
@@ -24,7 +24,8 @@ const getPageObjects = () => new Promise((resolve, reject) => {
 const invalidate = (event, con, cb) => {
   getPageObjects().then((x) => {
     const eventItems = JSON.parse(event.items);
-    const Items = [...eventItems, ...x];
+    eventItems.forEach(y => x.push(y));
+    const Items = x;
     const params = {
       DistributionId: process.env.ID,
       InvalidationBatch: {
