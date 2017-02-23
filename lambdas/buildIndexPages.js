@@ -8,6 +8,7 @@ const template = require('./template');
 const aws = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
+const cons = require('consolidate');
 
 const s3 = new aws.S3({ region: 'us-east-1' });
 
@@ -15,6 +16,7 @@ const makeIndex = data => new Promise((resolve, reject) => {
   const params = {
     Bucket: process.env.bucket,
     Body: data,
+    ContentType: 'text/html',
     Key: 'index',
   };
 
@@ -29,6 +31,31 @@ const makeIndex = data => new Promise((resolve, reject) => {
   });
 });
 
+const updateRSS = data => new Promise((resolve, reject) => {
+  cons.handlebars('rss.hbs', data, (err, html) => {
+    if (err) {
+      reject(err);
+    } else {
+      const params = {
+        Bucket: process.env.bucket,
+        Body: html,
+        ContentType: 'application/xml',
+        Key: 'rss.xml',
+      };
+
+      s3.putObject(params, (rssErr, uploadData) => {
+        if (rssErr) {
+          reject(rssErr);
+        }
+
+        if (uploadData) {
+          resolve(uploadData);
+        }
+      });
+    }
+  });
+});
+
 const writePages = (cb, page, title, data) => new Promise((resolve, reject) => {
   const ele = React.createElement(App.app, { component: 'list', data });
   const html = ReactDOMServer.renderToString(ele);
@@ -37,6 +64,7 @@ const writePages = (cb, page, title, data) => new Promise((resolve, reject) => {
   const params = {
     Bucket: process.env.bucket,
     Body: template(title, desc, html, perma),
+    ContentType: 'text/html',
     Key: `page/${page}`,
   };
 
@@ -73,6 +101,13 @@ const buildIndexPages = (event, context, callback) => {
         date: x.pub_date,
         title: x.title,
       })).reverse();
+
+      const rss = {
+        now: posts[0].date,
+        posts,
+      };
+
+      buildSteps.push(updateRSS(rss));
 
       const pages = Math.ceil((posts.length) / 10);
 

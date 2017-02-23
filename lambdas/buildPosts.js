@@ -20,6 +20,7 @@ const writePosts = data => new Promise((done, reject) => {
   const params = {
     Bucket: process.env.bucket,
     Body: template(data.title, desc, html, perma),
+    ContentType: 'text/html',
     Key: `writing/${perma}`,
   };
 
