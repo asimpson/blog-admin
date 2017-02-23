@@ -6,7 +6,7 @@ import Preview from './Frame';
 import template from './template';
 import publishPost from './publish';
 import editPost from './edit';
-import { buildPosts, buildIndex } from './posts';
+import { clearCache, buildPosts, buildIndex } from './posts';
 
 export default class NewPost extends Component {
   constructor(props) {
@@ -89,6 +89,8 @@ export default class NewPost extends Component {
     };
 
     if (this.state.editing) {
+      const title = this.state.tite;
+
       editPost(payload)
       .then(() => {
         this.setState({
@@ -100,7 +102,9 @@ export default class NewPost extends Component {
         });
       })
       .catch(error => this.setState({ error }))
+      .then(() => buildIndex())
       .then(() => buildPosts())
+      .then(() => clearCache(title))
       .then(() => console.log('done'))
       .catch(error => this.setState({ error }));
     } else {
@@ -116,6 +120,7 @@ export default class NewPost extends Component {
       .catch(error => this.setState({ error }))
       .then(() => buildIndex())
       .then(() => buildPosts())
+      .then(() => clearCache())
       .then(() => console.log('done'))
       .catch(error => this.setState({ error }));
     }

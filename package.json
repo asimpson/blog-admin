@@ -25,6 +25,9 @@
     "prereturnPosts": "cp ./lambdas/returnPosts.js ./",
     "returnPosts": "deployless update bucket=ams-admin name=returnPosts",
     "postreturnPosts": "rm returnPosts.js",
+    "precache": "cp ./lambdas/invalidate.js ./",
+    "cache": "deployless update bucket=ams-admin name=invalidate",
+    "postcache": "rm invalidate.js",
     "test": "parallelshell 'http-server ./ -p 9000 -e html' 'webpack --config webpack.admin.js -w'",
     "buildAdmin": "webpack --config webpack.admin.js",
     "fix": "eslint --fix ./lambdas/*.js"
