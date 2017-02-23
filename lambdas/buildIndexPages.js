@@ -102,9 +102,16 @@ const buildIndexPages = (event, context, callback) => {
         title: x.title,
       })).reverse();
 
+      const rssPosts = posts.map(x => ({
+        excerpt: x.excerpt,
+        slug: x.slug,
+        date: new Date(x.date).toUTCString(),
+        title: x.title,
+      }));
+
       const rss = {
-        now: posts[0].date,
-        posts,
+        now: new Date(posts[0].date).toUTCString(),
+        posts: rssPosts,
       };
 
       buildSteps.push(updateRSS(rss));
