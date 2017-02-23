@@ -42,7 +42,7 @@ export const buildIndex = () => new Promise((resolve, reject) => {
   });
 });
 
-export const clearCache = title => new Promise((resolve, reject) => {
+export const clearCache = slug => new Promise((resolve, reject) => {
   const auth = JSON.parse(sessionStorage.getItem('aws_token'));
   /* eslint max-len: 0 */
   const creds = new aws.Credentials(auth.perms.Credentials.AccessKeyId, auth.perms.Credentials.SecretAccessKey, auth.perms.Credentials.SessionToken);
@@ -56,8 +56,8 @@ export const clearCache = title => new Promise((resolve, reject) => {
     '/index',
   ];
 
-  if (title) {
-    items.push(`writing/${title}`);
+  if (slug) {
+    items.push(`/writing/${slug}`);
   }
 
   lambda.invoke({

@@ -89,7 +89,7 @@ export default class NewPost extends Component {
     };
 
     if (this.state.editing) {
-      const title = this.state.tite;
+      const slug = this.state.slug;
 
       editPost(payload)
       .then(() => {
@@ -104,7 +104,7 @@ export default class NewPost extends Component {
       .catch(error => this.setState({ error }))
       .then(() => buildIndex())
       .then(() => buildPosts())
-      .then(() => clearCache(title))
+      .then(() => clearCache(slug))
       .then(() => console.log('done'))
       .catch(error => this.setState({ error }));
     } else {
