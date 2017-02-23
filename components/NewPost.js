@@ -108,6 +108,7 @@ export default class NewPost extends Component {
       .then(() => console.log('done'))
       .catch(error => this.setState({ error }));
     } else {
+      payload.date = moment().format('YYYY-MM-DD HH:mm:ss');
       publishPost(payload).then(() => {
         this.setState({
           title: '',
