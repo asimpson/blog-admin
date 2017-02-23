@@ -53,7 +53,7 @@ export const clearCache = title => new Promise((resolve, reject) => {
   });
 
   const items = [
-    'index',
+    '/index',
   ];
 
   if (title) {

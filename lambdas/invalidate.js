@@ -28,7 +28,7 @@ const invalidate = (event, con, cb) => {
     const params = {
       DistributionId: process.env.ID,
       InvalidationBatch: {
-        CallerReference: Date.now(),
+        CallerReference: `${Date.now()}`,
         Paths: {
           Quantity: Items.length,
           Items,
