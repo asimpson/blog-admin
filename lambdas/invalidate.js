@@ -23,8 +23,7 @@ const getPageObjects = () => new Promise((resolve, reject) => {
 
 const invalidate = (event, con, cb) => {
   getPageObjects().then((x) => {
-    const eventItems = JSON.parse(event.items);
-    eventItems.forEach(y => x.push(y));
+    event.items.forEach(y => x.push(y));
     const Items = x;
     const params = {
       DistributionId: process.env.ID,
