@@ -155,32 +155,29 @@ export default class NewPost extends Component {
         <form onSubmit={this.publish}>
           <div>
             <label>
-              Title
+              <div>Title</div>
               <input value={this.state.title} onChange={this.titleChange} type="text" />
             </label>
           </div>
           <div>
             <label>
-              Excerpt
+              <div>Excerpt</div>
               <input value={this.state.excerpt} onChange={this.excerptChange} type="text" />
             </label>
           </div>
           <div>
             <label>
-              Slug
+              <div>Slug</div>
               <input value={this.state.slug} onChange={this.slugChange} type="text" />
-            </label>
-          </div>
-          <div>
-            <label>
-              Post
-              <textarea value={this.state.markdown} onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
             </label>
           </div>
           <div>
             <input name="publish" type="submit" value="Publish" />
           </div>
-          <Preview css="https://adamsimpson.net/css/base-da17be6277.css" html={this.state.html} />
+          <div className="flex">
+            <textarea value={this.state.markdown} onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
+            <Preview css="https://adamsimpson.net/css/base-da17be6277.css" html={this.state.html} />
+          </div>
         </form>
       );
     }
@@ -202,12 +199,8 @@ export default class NewPost extends Component {
   render() {
     return (
       <span>
-        <div>
-          <button onClick={this.getPosts}>Edit</button>
-        </div>
-        <div>
-          <button onClick={() => this.setState({ compose: true })}>Compose</button>
-        </div>
+        <button onClick={this.getPosts}>Edit</button>
+        <button onClick={() => this.setState({ compose: true })}>Compose</button>
         {this.renderScreen()}
         <p>{this.state.error}</p>
       </span>
