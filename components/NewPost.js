@@ -58,18 +58,18 @@ export default class NewPost extends Component {
     const id = e.target.id;
     /* eslint eqeqeq: 0 */
     const post = this.state.posts.filter(x => x.id == id)[0];
-    const md = toHTML(decodeURI(post.content));
+    const md = toHTML(post.content);
 
     this.setState({
       editing: true,
       compose: true,
       title: post.title,
-      excerpt: decodeURI(post.excerpt),
+      excerpt: post.excerpt,
       slug: post.slug,
       markdown: md,
-      body: decodeURI(post.content),
+      body: post.content,
       id,
-    }, this.updatePreview(decodeURI(post.content)));
+    }, this.updatePreview(post.content));
   }
 
   excerptChange(e) {
@@ -105,7 +105,7 @@ export default class NewPost extends Component {
       .then(() => buildIndex())
       .then(() => buildPosts())
       .then(() => clearCache(slug))
-      .then(() => console.log('done'))
+      .then(() => this.setState({ error: 'done' }))
       .catch(error => this.setState({ error }));
     } else {
       payload.date = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -122,7 +122,7 @@ export default class NewPost extends Component {
       .then(() => buildIndex())
       .then(() => buildPosts())
       .then(() => clearCache())
-      .then(() => console.log('done'))
+      .then(() => this.setState({ error: 'done' }))
       .catch(error => this.setState({ error }));
     }
   }
@@ -199,10 +199,10 @@ export default class NewPost extends Component {
   render() {
     return (
       <span>
+        <p>{this.state.error}</p>
         <button onClick={this.getPosts}>Edit</button>
         <button onClick={() => this.setState({ compose: true })}>Compose</button>
         {this.renderScreen()}
-        <p>{this.state.error}</p>
       </span>
     );
   }
