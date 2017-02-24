@@ -39,6 +39,7 @@ module.exports = (title, desc, content, slug) => {
         ${content}
         <footer>
           <script async defer src="/js/twitter-widget.js"></script>
+          <script async defer src="/js/175bd518.prism.js"></script>
         </footer>
       </body>
     </html>
