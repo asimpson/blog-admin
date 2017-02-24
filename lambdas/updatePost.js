@@ -40,8 +40,8 @@ const updatePost = (event, context, cb) => {
       $title: event.title,
       $mod_date: event.mod_date,
       $slug: event.slug,
-      $excerpt: decodeURI(event.excerpt),
-      $content: decodeURI(event.post),
+      $excerpt: event.excerpt,
+      $content: event.post,
       $id: event.id,
     }, function runCallback(e) {
       if (e) {

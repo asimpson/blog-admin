@@ -41,10 +41,10 @@ const newPost = (event, con, cb) => {
       $title: event.title,
       $pub_date: event.date,
       $mod_date: event.mod_date,
-      $content: decodeURI(event.post),
+      $content: event.post,
       $slug: event.slug,
       $status: 'published',
-      $excerpt: decodeURI(event.excerpt),
+      $excerpt: event.excerpt,
       $type: 'post',
     }, function newRun(insertErr) {
       if (insertErr) {
