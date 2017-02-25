@@ -35,6 +35,7 @@ export default class NewPost extends Component {
     this.getPosts = this.getPosts.bind(this);
     this.editPost = this.editPost.bind(this);
     this.updatePreview = this.updatePreview.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   componentDidMount() {
@@ -142,43 +143,44 @@ export default class NewPost extends Component {
     this.setState({ html, body });
   }
 
-  renderPreview() {
-    const body = marked(this.body.value);
-    const html = template(this.state.title, body);
-
-    this.setState({ html, body, markdown: this.body.value });
+  resetState() {
+    this.setState({ compose: false });
+    this.setState({ editing: false });
   }
 
   renderScreen() {
     if (this.state.compose) {
       return (
-        <form onSubmit={this.publish}>
-          <div>
-            <label>
-              <div>Title</div>
-              <input value={this.state.title} onChange={this.titleChange} type="text" />
-            </label>
-          </div>
-          <div>
-            <label>
-              <div>Excerpt</div>
-              <input value={this.state.excerpt} onChange={this.excerptChange} type="text" />
-            </label>
-          </div>
-          <div>
-            <label>
-              <div>Slug</div>
-              <input value={this.state.slug} onChange={this.slugChange} type="text" />
-            </label>
-          </div>
-          <div>
-            <input name="publish" type="submit" value="Publish" />
-          </div>
-          <div className="flex">
-            <textarea value={this.state.markdown} onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
-            <Preview css="https://adamsimpson.net/css/base-da17be6277.css" html={this.state.html} />
-          </div>
-        </form>
+        <span>
+          <button onClick={this.resetState}>Reset</button>
+          <form onSubmit={this.publish}>
+            <div>
+              <label>
+                <div>Title</div>
+                <input value={this.state.title} onChange={this.titleChange} type="text" />
+              </label>
+            </div>
+            <div>
+              <label>
+                <div>Excerpt</div>
+                <input value={this.state.excerpt} onChange={this.excerptChange} type="text" />
+              </label>
+            </div>
+            <div>
+              <label>
+                <div>Slug</div>
+                <input value={this.state.slug} onChange={this.slugChange} type="text" />
+              </label>
+            </div>
+            <div>
+              <input name="publish" type="submit" value="Publish" />
+            </div>
+            <div className="flex">
+              <textarea value={this.state.markdown} onChange={this.renderPreview} ref={(ele) => { this.body = ele; }} />
+              <Preview css="https://adamsimpson.net/css/base-da17be6277.css" html={this.state.html} />
+            </div>
+          </form>
+        </span>
       );
     }
 
@@ -190,18 +192,26 @@ export default class NewPost extends Component {
     ));
 
     return (
-      <ul>
-        {posts}
-      </ul>
+      <span>
+        <button onClick={() => this.setState({ compose: true, editing: false })}>New Post</button>
+        <ul>
+          {posts}
+        </ul>
+      </span>
     );
+  }
+
+  renderPreview() {
+    const body = marked(this.body.value);
+    const html = template(this.state.title, body);
+
+    this.setState({ html, body, markdown: this.body.value });
   }
 
   render() {
     return (
       <span>
         <p>{this.state.error}</p>
-        <button onClick={this.getPosts}>Edit</button>
-        <button onClick={() => this.setState({ compose: true })}>Compose</button>
         {this.renderScreen()}
       </span>
     );
