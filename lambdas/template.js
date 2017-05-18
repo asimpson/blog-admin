@@ -40,6 +40,22 @@ module.exports = (title, desc, content, slug) => {
         <footer>
           <script async defer src="/js/twitter-widget.js"></script>
           <script async defer src="/js/175bd518.prism.js"></script>
+          <script>
+            if (document.querySelectorAll) {
+              const $$ = (ele) => document.querySelectorAll(ele);
+
+              if ($$('pre').length > 0) {
+                $$('pre').forEach(x => {
+                  const codeFrag = document.createElement('code');
+                  const langClass = x.className;
+                  codeFrag.innerHTML = x.innerHTML;
+                  x.innerHTML = '';
+                  x.appendChild(codeFrag);
+                  x.querySelectorAll('code')[0].classList.add(langClass);
+                });
+              }
+            }
+          </script>
         </footer>
       </body>
     </html>
