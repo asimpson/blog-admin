@@ -39,7 +39,6 @@ module.exports = (title, desc, content, slug) => {
         ${content}
         <footer>
           <script async defer src="/js/twitter-widget.js"></script>
-          <script async defer src="/js/175bd518.prism.js"></script>
           <script>
             if (document.querySelectorAll) {
               const $$ = (ele) => document.querySelectorAll(ele);
@@ -56,6 +55,7 @@ module.exports = (title, desc, content, slug) => {
               }
             }
           </script>
+          <script defer src="/js/175bd518.prism.js"></script>
         </footer>
       </body>
     </html>
