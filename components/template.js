@@ -2,8 +2,7 @@ import moment from 'moment';
 
 const date = moment().format('MMM Do[,] YYYY');
 
-export default ((title, html) => {
-  return (`
+export default ((title, html) => (`
     <div id="app">
     <div class="app" data-reactid=".1noimx6a4n4" data-react-checksum="-1821682661">
     <div class="header" data-reactid=".1noimx6a4n4.0">
@@ -170,5 +169,4 @@ export default ((title, html) => {
     </div>
     </div>
     </div>
-  `);
-});
+  `));

@@ -1,7 +1,7 @@
 const React = require('react');
 
 const Footer = React.createClass({
-  render: function () {
+  render() {
     return (
       <div className="footer-wrapper">
         <div className="footer-info pl-max-width">
@@ -14,7 +14,7 @@ const Footer = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 module.exports = Footer;
