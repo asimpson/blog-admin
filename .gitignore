@@ -5,3 +5,4 @@
 /site
 /lambdas/BLOG
 dist*
+/search.js
