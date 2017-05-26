@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "admin": "parallelshell \"webpack --config webpack.admin.js --watch\" \"http-server -e html -p 5000 -c-1\"",
+    "search": "parallelshell \"webpack --config webpack.search.js --watch\" \"http-server -e html -p 5000 -c-1\"",
     "pretokenUpdate": "cp ./lambdas/returnToken.js ./",
     "tokenUpdate": "deployless update bucket=ams-admin name=returnToken key=returnToken.zip file=returnToken.js",
     "posttokenUpdate": "rm returnToken.js",
@@ -32,6 +33,9 @@
     "buildAdmin": "webpack --config webpack.admin.js",
     "deploy": "node deploy.js",
     "prod": "webpack -p --config webpack.admin.js",
+    "predeploySearch": "cp ./lambdas/buildSearch.js .",
+    "deploySearch": "deployless update bucket=ams-admin name=buildSearch",
+    "postdeploySearch": "rm ./buildSearch.js",
     "fix": "eslint --fix ./lambdas/*.js"
   },
   "license": "MIT",
@@ -52,6 +56,7 @@
     "he": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
+    "lunr": "^2.0.4",
     "marked": "^0.3.6",
     "moment": "^2.17.1",
     "mysql": "^2.12.0",
