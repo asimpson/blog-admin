@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "admin": "parallelshell \"webpack --config webpack.admin.js --watch\" \"http-server -e html -p 5000 -c-1\"",
-    "search": "parallelshell \"webpack --config webpack.search.js --watch\" \"http-server -e html -p 5000 -c-1\"",
+    "search:test": "parallelshell \"webpack --config webpack.search.js --watch\" \"http-server -e html -p 5000 -c-1\"",
     "pretokenUpdate": "cp ./lambdas/returnToken.js ./",
     "tokenUpdate": "deployless update bucket=ams-admin name=returnToken key=returnToken.zip file=returnToken.js",
     "posttokenUpdate": "rm returnToken.js",

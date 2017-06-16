@@ -45,14 +45,12 @@ class Search extends Component {
   renderResults() {
     if (this.state.searchTerm) {
       const results = this.lunr.search(this.state.searchTerm).map((x) => {
-        const article = this.state.posts.filter(post => post.slug === x.ref);
-
-        return <ListItem key={x.ref} data={article} />;
+        return this.state.posts.filter(post => post.slug === x.ref)[0];
       });
 
       return (
-        <div className="results">
-          {results}
+        <div className="results" style={{ padding: '1em 0em', backgroundColor: 'rgba(34, 130, 203, 0.21)' }}>
+          <ListItem data={results} />
         </div>
       );
     }
@@ -68,6 +66,7 @@ class Search extends Component {
             <input
               ref={(e => this.input = e)}
               name="search"
+              style={{ fontSize: '16px' }}
               type="text"
               placeholder="Search posts..."
             />

@@ -36,6 +36,7 @@ Requirements:
   3. update filename in template.js
   4. re-deploy buildPosts and updateBuildIndex with updated template.js
   5. clear cache for all pages
+  6. deploy search javascript to s3
 - ~npm run search:build~
 Build search client side
 - ~npm run fix~

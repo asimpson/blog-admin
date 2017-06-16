@@ -56,7 +56,7 @@ module.exports = (title, desc, content, slug) => {
             }
           </script>
           <script defer src="/js/175bd518.prism.js"></script>
-          <script defer src="/js/9f4c0c8923430c235e76bf0a1cd48d59.js"></script>
+          <script defer src="/js/2f6b63a9ed76d41e6a4d889d4456d275.js"></script>
         </footer>
       </body>
     </html>

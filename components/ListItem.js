@@ -5,7 +5,7 @@ const ListItem = React.createClass({
   render() {
     const titleObj = this.props.data.map((x, i) => {
       const slug = encodeURI(`/writing/${x.slug}`);
-      const date = moment(x.date).format('ll');
+      const date = moment(x.date || x.mod_date).format('ll');
 
       return (
         <li key={i} className="post-title sp_lg post-list">
