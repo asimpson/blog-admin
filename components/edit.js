@@ -13,11 +13,19 @@ const edit = payload => new Promise((resolve, reject) => {
   lambda.invoke({
     FunctionName: 'updatePost',
     Payload: JSON.stringify(payload),
-  }, (err, data) => {
+  }, (err) => {
     if (err) {
       reject(err);
     } else {
-      resolve(data);
+      lambda.invoke({
+        FunctionName: 'buildSearch',
+      }, (yerr) => {
+        if (yerr) {
+          reject(yerr);
+        } else {
+          resolve();
+        }
+      });
     }
   });
 });

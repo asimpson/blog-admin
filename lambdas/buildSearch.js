@@ -53,9 +53,11 @@ const buildSearch = (event, con, cb) => {
         }, this);
       });
 
-      saveIndex(JSON.stringify(index), cb);
+      console.log(JSON.stringify(index));
+      // saveIndex(JSON.stringify(index), cb);
     });
   });
 };
 
+buildSearch();
 exports.handler = buildSearch;

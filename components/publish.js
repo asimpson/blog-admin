@@ -13,13 +13,22 @@ const publish = payload => new Promise((resolve, reject) => {
   lambda.invoke({
     FunctionName: 'newPost',
     Payload: JSON.stringify(payload),
-  }, (err, data) => {
+  }, (err) => {
     if (err) {
       reject(err);
     } else {
-      resolve(data);
+      lambda.invoke({
+        FunctionName: 'buildSearch',
+      }, (yerr) => {
+        if (yerr) {
+          reject(yerr);
+        } else {
+          resolve();
+        }
+      });
     }
   });
+
 });
 
 export default publish;

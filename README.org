@@ -1,0 +1,44 @@
+* Blog
+** Deployment
+*** Page builders
+- ~npm run buildPosts~
+Pulls posts from sqlite and runs data through React which generates S3 files
+Requires webpack to be built for app.js
+- ~npm run updateBuildIndex~
+Pulls posts from sqlite and generates index pages
+Requires webpack to be built for app.js
+- ~npm run buildAdmin~
+Generates Admin client side app
+*** Actions
+- ~npm run newPost~
+Inserts new post into DB
+- ~npm run updatePost~
+Updates post in DB
+- ~npm run tokenUpdate~
+Lambda that takes in a token and returns AWS credentials
+- ~npm run loginUpdate~
+Generates temp token and sends email with magic link
+*** Routes
+- ~npm run returnPosts~
+Returns posts as JSON
+*** Tasks
+- ~npm run cache~
+Clears the cache on /page files
+- ~npm run deploy~
+Deploys admin
+- ~npm run deploySearch~
+Deploy search builder
+- ~npm run search~
+Deploy search react app
+Requirements:
+  1. run webpack
+  2. md5 and change filename
+  3. update filename in template.js
+  4. re-deploy buildPosts and updateBuildIndex with updated template.js
+  5. clear cache for all pages
+- ~npm run search:build~
+Build search client side
+- ~npm run fix~
+eslint --fix lambdas
+*** Deps
+All sqlite interaction must use the Linux-built sqlite npm module in ~pkg.tar~

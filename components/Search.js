@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
 import lunr from 'lunr';
 import { render } from 'react-dom';
+import ListItem from './ListItem';
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: {},
       posts: {},
       searchTerm: '',
     };
@@ -30,10 +30,9 @@ class Search extends Component {
   }
 
   fetchIndex() {
-    fetch('searchIndex.json')
+    fetch('/searchIndex.json')
     .then(x => x.json())
     .then(x => {
-      this.setState({ index: x });
       this.lunr = lunr.Index.load(x);
     });
   }
@@ -46,15 +45,9 @@ class Search extends Component {
   renderResults() {
     if (this.state.searchTerm) {
       const results = this.lunr.search(this.state.searchTerm).map((x) => {
-        const article = this.state.posts.filter(post => post.slug === x.ref)[0];
-        const link = `/${x.ref}`;
+        const article = this.state.posts.filter(post => post.slug === x.ref);
 
-        return (
-          <div key={x.ref}>
-            <a href={link}>{article.title}</a>
-            <p>{article.excerpt}</p>
-          </div>
-        );
+        return <ListItem key={x.ref} data={article} />;
       });
 
       return (
@@ -69,7 +62,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div>
+      <div className="pl-max-width">
         <form onSubmit={this.performSearch}>
           <label>
             <input

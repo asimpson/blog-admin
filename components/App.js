@@ -15,6 +15,7 @@ const App = React.createClass({
     return (
       <div className="app">
         <Header />
+        <div id="search-root" />
         <Comp data={this.props.data} />
         <Footer />
       </div>
