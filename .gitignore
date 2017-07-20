@@ -1,8 +1,7 @@
-/dist.js
-/BLOG
-/app.js
-/site/index.html
-/site
-/lambdas/BLOG
-dist*
-/search.js
+search.*.js
+admin.*.js
+/sqlite-linux.tar
+react-app
+/packages/node_modules/react-app.js
+BLOG
+/webpack-hash.json

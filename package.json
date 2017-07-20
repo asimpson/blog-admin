@@ -1,10 +1,7 @@
 {
   "name": "blog-admin",
-  "version": "0.1.0",
-  "main": "index.js",
+  "version": "0.2.0",
   "scripts": {
-    "admin": "parallelshell \"webpack --config webpack.admin.js --watch\" \"http-server -e html -p 5000 -c-1\"",
-    "search:test": "parallelshell \"webpack --config webpack.search.js --watch\" \"http-server -e html -p 5000 -c-1\"",
     "pretokenUpdate": "cp ./lambdas/returnToken.js ./",
     "tokenUpdate": "deployless update bucket=ams-admin name=returnToken key=returnToken.zip file=returnToken.js",
     "posttokenUpdate": "rm returnToken.js",
@@ -29,19 +26,15 @@
     "precache": "cp ./lambdas/invalidate.js ./",
     "cache": "deployless update bucket=ams-admin name=invalidate",
     "postcache": "rm invalidate.js",
-    "test": "parallelshell 'http-server ./ -p 9000 -e html' 'webpack --config webpack.admin.js -w'",
-    "buildAdmin": "NODE_ENV=production webpack --config webpack.admin.js -p",
     "deploy": "node deploy.js",
-    "prod": "webpack -p --config webpack.admin.js",
     "predeploySearch": "cp ./lambdas/buildSearch.js .",
     "deploySearch": "deployless update bucket=ams-admin name=buildSearch",
     "postdeploySearch": "rm ./buildSearch.js",
-    "search:build": "NODE_ENV=production webpack --config webpack.search.js -p",
     "search": "node uploadSearch.js",
-    "fix": "eslint --fix ./lambdas/*.js",
-    "webpack:lambda": "webpack --config webpack.lambda.js"
+    "webpack:lambda": "webpack --config webpack.lambda.js",
+    "start": "nodemon server.js",
+    "browser": "NODE_ENV=production webpack --config webpack.browser.js -p"
   },
-  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.6.11",
     "babel-cli": "^6.22.2",
@@ -72,6 +65,7 @@
     "webpack": "^2.2.1"
   },
   "devDependencies": {
-    "http-server": "^0.9.0"
+    "express": "^4.15.3",
+    "nodemon": "^1.11.0"
   }
 }

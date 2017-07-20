@@ -1,0 +1,5 @@
+{
+  "ignoreRoot": [".git"],
+  "ignore": ["./node_modules"],
+  "watch": "packages"
+}

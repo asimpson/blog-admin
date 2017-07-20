@@ -1,8 +1,11 @@
+const path = require('path');
+
 module.exports = {
-  entry: './components/App.js',
+  entry: './packages/node_modules/App.js',
   output: {
-    filename: './app.js',
-    library: 'app',
+    filename: './react-app.js',
+    path: path.resolve('./packages/node_modules/'),
+    library: 'react-app',
     libraryTarget: 'commonjs',
   },
   externals: {
@@ -14,11 +17,13 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: { presets: ['es2015', 'react'] },
-        }],
+        exclude: `${path.resolve(__dirname)}/node_modules`,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: { presets: ['es2015', 'react'] },
+          },
+        ],
       },
     ],
   },
