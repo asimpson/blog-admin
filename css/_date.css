@@ -1,0 +1,33 @@
+.post-date {
+  color: darken($gray, 5%);
+  margin: 0.5em 0 0.5em 0;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+
+  a {
+    color: $gray;
+
+    &:visited {
+      color: $gray;
+    }
+  }
+}
+
+.post-date__full-post {
+  margin: 1.2em 0 0.5em 0;
+}
+
+.post-modified-date {
+  margin-top: 0.5em;
+}
+
+.modified-date {
+  margin-left: 0.5em;
+}
+
+.home-link {
+  a, a:visited {
+    color: $blue;
+  }
+}

@@ -7,6 +7,7 @@ module.exports = {
     search: './packages/node_modules/Search.js',
   },
   output: {
+    path: path.resolve('./js'),
     filename: './[name].[chunkhash].js',
   },
   module: {

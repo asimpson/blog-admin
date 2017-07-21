@@ -32,7 +32,9 @@
     "postdeploySearch": "rm ./buildSearch.js",
     "search": "node uploadSearch.js",
     "webpack:lambda": "webpack --config webpack.lambda.js",
-    "start": "nodemon server.js",
+    "nodemon": "nodemon server.js",
+    "postcss": "postcss -w css/base.css -o packages/node_modules/site.css",
+    "start": "run-p nodemon postcss",
     "browser": "NODE_ENV=production webpack --config webpack.browser.js -p"
   },
   "dependencies": {
@@ -65,7 +67,13 @@
     "webpack": "^2.2.1"
   },
   "devDependencies": {
+    "cssnano": "^3.10.0",
     "express": "^4.15.3",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
+    "postcss": "^6.0.8",
+    "postcss-cli": "^4.1.0",
+    "postcss-nesting": "^4.0.1",
+    "postcss-partial-import": "^4.1.0"
   }
 }

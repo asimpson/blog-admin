@@ -1,0 +1,30 @@
+.side-by-side--wrapper {
+  display: table;
+  border-collapse: separate;
+  width: 80%;
+  margin: 1em auto;
+}
+
+.side-by-side {
+  vertical-align: middle;
+  display: table-cell;
+
+  .side-by-side_align-bottom & {
+    vertical-align: bottom;
+  }
+
+  .side-by-side_align-top & {
+    vertical-align: top;
+  }
+}
+
+.side-by-side--major {
+  float: left;
+  width: 100%;
+}
+
+.side-by-side--minor {
+  white-space: nowrap;
+  margin-left: -1px;
+  width: 1%;
+}

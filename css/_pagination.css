@@ -1,0 +1,41 @@
+.pagination-wrapper {
+  @include clearfix;
+  font-family: 'proxima-nova';
+  margin: 5em auto;
+
+  a {
+    @extend %link-treatment;
+    background-color: #2C2C6E;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 1em;
+    border-radius: 999px;
+    position: relative;
+
+    &:before {
+      display: block;
+      position: absolute;
+      top: 8px;
+      color: white;
+      font-size: 1.3em;
+    }
+  }
+
+  .next-unicode {
+    &:before {
+      left: 50%;
+      margin-left: -5px;
+      content: "\3009";
+    }
+  }
+
+  .prev-unicode {
+    background-color: #9292BE;
+    &:before {
+      left: 0; 
+      margin-left: 5px;
+      content: "\3008";
+    }
+  }
+}

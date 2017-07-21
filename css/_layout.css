@@ -1,0 +1,42 @@
+.pl-max-width {
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.block {
+  display: block;
+}
+
+.footer-info {
+  margin-bottom: .5em;
+
+  @media(min-width: 35.9375em) {
+    margin-top: 0.5em;
+  }
+}
+
+.footer-made {
+  @media(min-width: 35.9375em) {
+    float: right;
+  }
+}
+
+.footer-feed-link {
+  margin: 0.6em auto;
+  display: inline-block;
+
+  @media (min-width: 35.9375em) {
+    display: inline;
+  }
+}
+
+.seperator {
+  margin: 0 0.5em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.footer-wrapper {
+  padding: 0.5em;
+}

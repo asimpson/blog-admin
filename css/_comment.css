@@ -1,0 +1,128 @@
+.comments {
+  font-family: sans-serif;
+  border-top: 1px solid black;
+  margin: 4em auto;
+  padding-top: 2em;
+  width: 100%;
+
+  > h2 {
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: sans-serif;
+    text-transform: uppercase;
+  }
+}
+
+.comment {
+  background-color: #E4E4E4;
+  padding: 1em 1em 1em 2em;
+
+  code {
+    word-break: break-all;
+
+    /* Non standard for webkit */
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+  }
+}
+
+.side-by-side--wrapper {
+  width: 100%;
+  margin: 1em 0;
+  max-width: 500px;
+
+  input {
+    border-radius: 0;
+    -webkit-appearance: none !important;;
+    box-sizing: border-box;
+    padding: 1em;
+    font-size: 1em;
+    border: 1px solid black;
+  }
+
+  input[type=submit] {
+    background: $blue;
+    cursor: pointer;
+    color: white;
+    margin: 0 !important;
+    border-left: none;
+  }
+}
+
+.show-comments {
+  position: relative;
+  padding-left: 0;
+  display: block;
+  background-color: transparent;
+  text-decoration: underline;
+  color: #5C5B5B;
+  border: none;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.comment-wrapper {
+  margin: 2em auto 4em auto;
+}
+
+.author-link {
+  font-size: 1.2em;
+  text-decoration: underline;
+  position: relative;
+  display: block;
+  padding-left: 1.1em;
+  margin-bottom: 0.5em;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-width: 7px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    border-top-color: #564F4F;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -2px;
+  }
+}
+
+.comment-date {
+  margin-bottom: 1em;
+}
+
+.comment-content {
+  border-top: 1px solid #000;
+  padding-top: 1em;
+}
+
+.comment-status {
+  $color: #E8A731;
+  padding: 1em;
+  padding-left: .5em;
+  background-color: $color;
+  color: #FFF;
+  margin-bottom: 1em;
+  position: relative;
+  width: auto;
+  display: inline-block;
+
+  &:before {
+    content: '';
+    display: block;
+    height: 0;
+    width: 0;
+    border-color: rgba(0, 0, 0, 0);
+    border-width: 15px;
+    position: absolute;
+    border-style: solid;
+    border-bottom-color: $color;
+    top: -30px;
+    left: 10px;
+  }
+}
