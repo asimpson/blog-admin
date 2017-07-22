@@ -17,10 +17,6 @@ img {
   margin: 0.5em 0;
 }
 
-article a {
-  @extend %link-treatment;
-}
-
 li {
   margin: 1em 0;
 }

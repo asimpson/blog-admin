@@ -73,6 +73,7 @@
     "npm-run-all": "^4.0.2",
     "postcss": "^6.0.8",
     "postcss-cli": "^4.1.0",
+    "postcss-nested": "^2.0.4",
     "postcss-nesting": "^4.0.1",
     "postcss-partial-import": "^4.1.0"
   }

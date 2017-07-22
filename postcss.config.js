@@ -4,7 +4,7 @@ module.exports = {
       root: './css',
       prefix: '_',
     }),
-    require('postcss-nesting')(),
+    require('postcss-nested')(),
     require('cssnano')(),
   ],
 };
