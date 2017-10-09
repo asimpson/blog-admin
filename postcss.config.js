@@ -5,6 +5,7 @@ module.exports = {
       prefix: '_',
     }),
     require('postcss-nested')(),
+    require('postcss-simple-vars')(),
     require('cssnano')(),
   ],
 };
