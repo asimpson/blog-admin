@@ -2,8 +2,8 @@
   "name": "blog-admin",
   "version": "0.2.0",
   "scripts": {
-    "pretokenUpdate": "cp ./lambdas/returnToken.js ./",
     "tokenUpdate": "deployless update bucket=ams-admin name=returnToken key=returnToken.zip file=returnToken.js",
+    "pretokenUpdate": "npm run shim -- returnToken",
     "posttokenUpdate": "rm returnToken.js",
     "preloginUpdate": "cp ./lambdas/handleLogin.js ./",
     "loginUpdate": "deployless update bucket=ams-admin name=handleLogin key=handleLogin.zip file=handleLogin.js",
@@ -35,7 +35,8 @@
     "nodemon": "nodemon server.js",
     "postcss": "postcss -w css/base.css -o packages/node_modules/site.css",
     "start": "run-p nodemon postcss",
-    "browser": "NODE_ENV=production webpack --config webpack.browser.js -p"
+    "browser": "NODE_ENV=production webpack --config webpack.browser.js -p",
+    "shim": "node ./shim.js"
   },
   "dependencies": {
     "aws-sdk": "^2.6.11",
@@ -45,7 +46,7 @@
     "babel-preset-react": "^6.22.0",
     "consolidate": "^0.14.5",
     "content-type-mime": "^1.1.0",
-    "deployless": "^0.2.1",
+    "deployless": "^0.3.1",
     "es6-promise": "^4.0.5",
     "eslint": "^3.15.0",
     "eslint-config-sparkbox": "^0.4.0",
