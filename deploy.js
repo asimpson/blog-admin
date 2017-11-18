@@ -16,9 +16,7 @@ const clear = () => {
       CallerReference: `${Date.now()}`,
       Paths: {
         Quantity: 1,
-        Items: [
-          '/admin',
-        ],
+        Items: ['/admin'],
       },
     },
   };
@@ -29,37 +27,37 @@ const clear = () => {
   });
 };
 
-const upload = file => new Promise((resolve, reject) => {
-  let Key;
-  const Body = fs.readFileSync(file);
+const upload = file =>
+  new Promise((resolve, reject) => {
+    let Key;
+    const Body = fs.readFileSync(file);
 
-  if (/html/.test(file)) {
-    Key = path.basename(file, '.html');
-  } else {
-    Key = file;
-  }
-
-
-  const params = {
-    Bucket: process.env.bucket,
-    ContentType: type(file),
-    ACL: 'public-read',
-    Key,
-    Body,
-  };
-
-  s3.putObject(params, (err) => {
-    if (err) {
-      reject(err);
+    if (/html/.test(file)) {
+      Key = path.basename(file, '.html');
     } else {
-      resolve();
+      Key = file;
     }
+
+    const params = {
+      Bucket: process.env.bucket,
+      ContentType: type(file),
+      ACL: 'public-read',
+      Key,
+      Body,
+    };
+
+    s3.putObject(params, err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
   });
-});
 
 const deploy = () => {
-  const files = globby.sync(['dist*.js', 'admin.html']);
-  const tasks = files.map((x => upload(x)));
+  const files = globby.sync(['js/*.js', 'admin.html']);
+  const tasks = files.map(x => upload(x));
   Promise.all(tasks).then(() => clear());
 };
 
