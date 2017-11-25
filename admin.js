@@ -56,7 +56,10 @@ const upload = file =>
   });
 
 const deploy = () => {
-  const files = globby.sync(['js/*.js', 'admin.html']);
+  const adminFile = JSON.parse(
+    fs.readFileSync('./webpack-hash.json').toString()
+  );
+  const files = globby.sync([`./js/${adminFile.admin}`, 'admin.html']);
   const tasks = files.map(x => upload(x));
   Promise.all(tasks).then(() => clear());
 };

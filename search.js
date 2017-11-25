@@ -2,9 +2,10 @@ const aws = require('aws-sdk');
 const fs = require('fs');
 
 const s3 = new aws.S3({ region: 'us-east-1' });
-const Key = '2f6b63a9ed76d41e6a4d889d4456d275';
+const search = JSON.parse(fs.readFileSync('./webpack-hash.json').toString());
+const Key = search.search;
 
-const Body = fs.readFileSync(`${Key}.js`);
+const Body = fs.readFileSync(`./js/${Key}.js`);
 const params = {
   Body,
   Key: `js/${Key}.js`,

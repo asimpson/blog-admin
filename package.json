@@ -2,10 +2,10 @@
   "name": "blog-admin",
   "version": "0.2.0",
   "scripts": {
-    "deploy": "node deploy.js",
+    "admin": "node admin.js",
     "preupdate": "npm run webpack:lambda && npm run browser && npm run postcss",
     "update": "node publish.js",
-    "search": "node uploadSearch.js",
+    "search": "node search.js",
     "webpack:lambda": "webpack --config webpack.lambda.js",
     "nodemon": "nodemon server.js",
     "postcss": "postcss css/base.css -o packages/node_modules/site.css",
