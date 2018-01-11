@@ -4,6 +4,7 @@
 
 body {
   font-family: Georgia, serif;
+  font-family: sans-serif;
   margin: 0;
 
   ::selection {
