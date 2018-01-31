@@ -1,5 +1,3 @@
-search.*.js
-admin.*.js
 /sqlite-linux.tar
 react-app
 /packages/node_modules/react-app.js
@@ -8,3 +6,4 @@ BLOG
 /packages/node_modules/site.css
 /SOCIAL
 /config.js
+/js/*
